@@ -1,0 +1,65 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #e6ecf3;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    color: #333;
+}
+
+/* App Container */
+.app-container {
+    max-width: 700px;
+    margin: auto;
+    padding: 30px;
+    padding-bottom: 100px; /* Prevent overlap with floating button */
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    color: #3366ff;
+    margin-bottom: 30px;
+    font-size: 32px;
+    letter-spacing: 1px;
+}
+
+/* Floating Add Todo Button */
+.floating-plus-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #3366ff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.1s;
+    z-index: 1000;
+}
+
+.floating-plus-button:hover {
+    background-color: #254eda;
+}
+
+.floating-plus-button:active {
+    transform: scale(0.95);
+}
+
+/* General List Styling */
+ul {
+    list-style-type: none; /* Removes bullets from all lists */
+    padding: 0;
+}
+
+/* Styling for No Todos Message */
+ul.no-todos {
+    list-style-type: none; /* Ensures no bullet point appears */
+}

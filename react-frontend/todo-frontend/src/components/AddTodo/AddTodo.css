@@ -1,0 +1,94 @@
+/* Add Todo Container */
+.add-todo-container {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 500px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box; /* Makes sure padding is included in width calculation */
+}
+
+/* Task Input */
+.add-todo-input, .add-todo-tags, .add-todo-description {
+    width: calc(100% - 20px); /* Reduce width slightly to fit within the container */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border 0.3s;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.add-todo-input:focus,
+.add-todo-tags:focus,
+.add-todo-description:focus {
+    border-color: #3366ff;
+    outline: none;
+}
+
+/* Add & Cancel Buttons */
+.add-todo-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Buttons */
+.add-todo-button, .cancel-todo-button {
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    font-size: 14px;
+    border: none;
+}
+
+.add-todo-button {
+    background-color: #3366ff;
+    color: white;
+}
+
+.cancel-todo-button {
+    background-color: #888;
+    color: white;
+}
+
+.add-todo-button:hover {
+    background-color: #254eda;
+}
+
+.cancel-todo-button:hover {
+    background-color: #666;
+}
+
+.add-todo-button:active, .cancel-todo-button:active {
+    transform: scale(0.98);
+}
+
+/* Floating Plus Button */
+.floating-plus-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #3366ff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.floating-plus-button:hover {
+    background-color: #254eda;
+}
+
+.floating-plus-button:active {
+    transform: scale(0.95);
+}

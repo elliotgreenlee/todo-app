@@ -1,0 +1,32 @@
+/* Todo Items */
+.todo-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 12px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.1s;
+}
+
+.todo-item:hover {
+    background-color: #e6f0ff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    transform: scale(1.02);
+}
+
+/* Todo Content Container */
+.todo-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+/* Editing State */
+.todo-item.editing {
+    background-color: #f0f4ff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}

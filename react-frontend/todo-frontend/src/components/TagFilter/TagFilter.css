@@ -1,0 +1,46 @@
+/* Tag Filter Container */
+.tag-filter-container {
+    margin-bottom: 16px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Search Bar Styling */
+.tag-filter-search {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+/* Tag Filter Tags Container */
+.tag-filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+/* Individual Tag Styling */
+.filter-tag {
+    background-color: #e0f0ff;
+    color: #3366ff;
+    padding: 4px 8px;
+    margin: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.filter-tag:hover {
+    background-color: #cce0ff;
+    transform: scale(1.05);
+}
+
+/* Selected Tag Styling */
+.filter-tag.selected {
+    background-color: #3366ff;
+    color: white;
+}
