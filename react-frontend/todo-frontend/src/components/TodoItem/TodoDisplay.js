@@ -2,20 +2,19 @@ import React, { useState } from 'react';
 import MarkdownRenderer from './MarkdownRenderer';
 import './TodoDisplay.css';
 
-export default function TodoDisplay({ todo, setEditing, onTagClick }) {
+export default function TodoDisplay({ todo, setEditing}) {
   const [showDescription, setShowDescription] = useState(false);
 
   const handleToggleDescription = (e) => {
-    e.stopPropagation(); // Prevents triggering editing mode
+    e.stopPropagation();
     setShowDescription(prev => !prev);
   };
 
-  const isArchived = todo.completed;
   const todoTags = Array.isArray(todo.tags) ? todo.tags : [];
 
   return (
-    <div className={`todo-content ${isArchived ? 'archived' : ''}`}>
-      <span className={`todo-text ${isArchived ? 'archived-text' : ''}`}>
+    <div className={`todo-content ${todo.lists.includes('Archived') ? 'archived' : ''}`}>
+      <span className={`todo-text ${todo.lists.includes('Archived') ? 'archived-text' : ''}`}>
         {todo.task}
       </span>
 
@@ -38,10 +37,9 @@ export default function TodoDisplay({ todo, setEditing, onTagClick }) {
           Tags: {todoTags.map(tag => (
             <span
               key={tag}
-              className={`tag ${isArchived ? 'archived-tag' : ''}`}
+              className={`tag ${todo.lists.includes('Archived') ? 'archived-tag' : ''}`}
               onClick={(e) => {
                 e.stopPropagation();
-                if (onTagClick) onTagClick(tag);
               }}
             >
               {tag}

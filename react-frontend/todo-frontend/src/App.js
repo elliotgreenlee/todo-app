@@ -1,14 +1,15 @@
+// src/App.js
 import React, { useState, useEffect, useCallback } from 'react';
 import AddTodo from './components/AddTodo/AddTodo';
 import TodoList from './components/TodoList';
 import TagFilter from './components/TagFilter/TagFilter';
+import ListBar from './components/ListBar/ListBar';
 import './App.css';
 
 export default function App() {
   const [todos, setTodos] = useState([]);
-  const [filteredActiveTodos, setFilteredActiveTodos] = useState([]);
-  const [filteredArchivedTodos, setFilteredArchivedTodos] = useState([]);
-  const [showAddTodo, setShowAddTodo] = useState(false);
+  const [filter, setFilter] = useState({ searchTerm: "", selectedTags: [] });
+  const [selectedList, setSelectedList] = useState('Active'); // Default list is Active
 
   // Fetch todos (memoized with useCallback)
   const fetchTodos = useCallback(() => {
@@ -17,7 +18,6 @@ export default function App() {
       .then(data => {
         const todosArray = Object.values(data);
         setTodos(todosArray);
-        filterTodos(todosArray, "", []);  // Initialize filtered todos with all data
       })
       .catch(error => console.error('Error fetching todos:', error));
   }, []);
@@ -27,18 +27,15 @@ export default function App() {
     fetchTodos();
   }, [fetchTodos]);
 
-  const addTodo = (task, description = "", tags = []) => {
+  const addTodo = (task, description = "", tags = [], lists = ["Active"]) => {
     fetch('http://127.0.0.1:5000/todos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ task, description, tags })
+      body: JSON.stringify({ task, description, tags, lists })
     })
       .then(response => response.json())
       .then(newTodo => {
-        const updatedTodos = [...todos, newTodo];
-        setTodos(updatedTodos);
-        filterTodos(updatedTodos, "", []);
-        setShowAddTodo(false); // Hide AddTodo after adding a task
+        setTodos([...todos, newTodo]);
       })
       .catch(error => console.error('Error adding todo:', error));
   };
@@ -55,7 +52,6 @@ export default function App() {
           todo.id === updatedTodo.id ? updatedTodo : todo
         );
         setTodos(updatedTodos);
-        filterTodos(updatedTodos, "", []);
       })
       .catch(error => console.error('Error updating todo:', error));
   };
@@ -68,51 +64,44 @@ export default function App() {
       .then(deletedTodo => {
         const updatedTodos = todos.filter(todo => todo.id !== deletedTodo.id);
         setTodos(updatedTodos);
-        filterTodos(updatedTodos, "", []);
       })
       .catch(error => console.error('Error deleting todo:', error));
   };
 
-  const filterTodos = (todosArray, searchTerm, selectedTags) => {
-    const activeTodos = todosArray.filter(todo => !todo.completed);
-    const archivedTodos = todosArray.filter(todo => todo.completed);
-
-    const filterBySearchAndTags = (todoList) =>
-      todoList.filter(todo => {
-        const matchesSearch = todo.task.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesTags = selectedTags.length === 0 ||
-          (todo.tags && selectedTags.every(tag => todo.tags.includes(tag)));
-        return matchesSearch && matchesTags;
-      });
-
-    setFilteredActiveTodos(filterBySearchAndTags(activeTodos));
-    setFilteredArchivedTodos(filterBySearchAndTags(archivedTodos));
-  };
-
-  const handleFilterChange = (searchTerm, selectedTags) => {
-    filterTodos(todos, searchTerm, selectedTags);
+  // Get unique lists from todos (including "Active" and "Archived")
+  const getUniqueLists = () => {
+    const allLists = todos.reduce((acc, todo) => {
+      if (todo.lists) {
+        todo.lists.forEach(list => {
+          if (!acc.includes(list)) {
+            acc.push(list);
+          }
+        });
+      }
+      return acc;
+    }, ["Active", "Archived"]);
+    return allLists;
   };
 
   return (
     <div className="app-container">
       <h1>Remindr</h1>
-      <TagFilter todos={todos} onFilterChange={handleFilterChange} />
+      <TagFilter todos={todos} setFilter={setFilter} />
+
+      <ListBar
+        lists={getUniqueLists()}
+        onListClick={setSelectedList}
+      />
 
       <TodoList
-        listName="To Do List"
-        todos={filteredActiveTodos}
+        listName={selectedList}
+        todos={todos}
+        filter={filter}
         updateTodo={updateTodo}
         deleteTodo={deleteTodo}
       />
-      <TodoList
-        listName="Logbook"
-        todos={filteredArchivedTodos}
-        updateTodo={updateTodo}
-        deleteTodo={deleteTodo}
-      />
 
-      {/* AddTodo Component */}
-      <AddTodo addTodo={addTodo} showAddTodo={showAddTodo} setShowAddTodo={setShowAddTodo} />
+      <AddTodo addTodo={addTodo} />
     </div>
   );
 }

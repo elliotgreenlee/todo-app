@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from uuid import uuid4
 import os
-from models import db, Todo
+from models import db, Todo, reset_database
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3000"])
@@ -17,6 +17,7 @@ db.init_app(app)
 # Initialize the database (create tables if they don't exist)
 with app.app_context():
     db.create_all()
+    reset_database()  # for testing
 
 
 @app.route('/todos', methods=['GET'])
@@ -38,7 +39,8 @@ def create_todo():
         task=data['task'],
         completed=False,
         description=data.get('description', ""),
-        tags=",".join(data.get('tags', []))
+        tags=",".join(data.get('tags', [])),
+        lists=",".join(data.get('lists', []))
     )
 
     db.session.add(new_todo)
@@ -70,6 +72,8 @@ def update_todo(todo_id):
         todo.description = data['description']
     if 'tags' in data:
         todo.tags = ",".join(data['tags'])
+    if 'lists' in data:
+        todo.lists = ",".join(data['lists'])
 
     db.session.commit()
     return jsonify(todo.to_dict())

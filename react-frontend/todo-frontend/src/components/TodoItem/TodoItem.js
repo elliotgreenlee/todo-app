@@ -6,7 +6,6 @@ import './TodoItem.css';
 
 export default function TodoItem({ todo, updateTodo, deleteTodo }) {
   const [editing, setEditing] = useState(false);
-  const completedClass = todo.completed ? 'todo-item completed' : 'todo-item';
 
   const handleEdit = (updatedFields) => {
     updateTodo(todo.id, updatedFields);
@@ -25,13 +24,12 @@ export default function TodoItem({ todo, updateTodo, deleteTodo }) {
 
   return (
     <li
-      className={`${completedClass} ${editing ? 'editing' : ''}`}
+      className={`${todo.completed ? 'todo-item completed' : 'todo-item'} ${editing ? 'editing' : ''}`}
       onDoubleClick={handleDoubleClick}
     >
       <CheckboxToggle
         todo={todoWithTagsArray}
         updateTodo={updateTodo}
-        handleEdit={() => handleEdit({ completed: !todo.completed })}
       />
       {editing ? (
         <TodoEditor

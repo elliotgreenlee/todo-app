@@ -2,7 +2,8 @@ import React from 'react';
 import './DeleteButton.css';
 
 export default function DeleteButton({ todo, deleteTodo }) {
-  function handleDelete() {
+  function handleDelete(e) {
+    e.stopPropagation();
     deleteTodo(todo.id);
   }
 

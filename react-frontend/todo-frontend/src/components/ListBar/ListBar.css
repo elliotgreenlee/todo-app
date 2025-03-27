@@ -1,0 +1,54 @@
+/* ListBar Styling */
+.listbar {
+  width: 200px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+/* Styling for the header */
+.listbar h3 {
+  margin-top: 0;
+  color: #3366ff;
+  font-size: 20px;
+  text-align: center;
+}
+
+/* General list styling */
+.listbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Styling for each list item */
+.listbar li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+
+/* Hover effect for list items */
+.listbar li:hover {
+  background-color: #e6f0ff;
+}
+
+/* Specific styling for default lists (Active and Archived) */
+.default-list {
+  font-weight: bold;
+  background-color: #e0eaff; /* Light blue background for default lists */
+  border-radius: 5px;
+  margin-bottom: 10px;
+  color: #3366ff;
+}
+
+.default-list:hover {
+  background-color: #c5d9f9;
+}

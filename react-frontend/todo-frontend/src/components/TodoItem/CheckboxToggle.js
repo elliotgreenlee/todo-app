@@ -1,19 +1,28 @@
 import React from 'react';
 import './CheckboxToggle.css';
 
-function CheckboxToggle({ todo, updateTodo, handleEdit }) {
+function CheckboxToggle({ todo, updateTodo }) {
 
-  function handleToggleCompleted() {
-    updateTodo(todo.id, { completed: !todo.completed });
-
-    if (handleEdit) handleEdit();  // Trigger save if in editing mode
+  function handleToggle(e) {
+    e.stopPropagation();
+    updateTodo(todo.id, { completed: !todo.completed});
+    let newLists = []
+    if (todo.lists.includes('Active')) {
+      newLists = todo.lists.filter(list => list !== 'Active');
+      newLists = [...newLists, 'Archived']
+    }
+    else {
+      newLists = todo.lists.filter(list => list !== 'Archived');
+      newLists = [...newLists, 'Active']
+    }
+    updateTodo(todo.id, { lists: newLists })
   }
 
   return (
     <input
       type="checkbox"
       checked={todo.completed}
-      onChange={handleToggleCompleted}
+      onChange={handleToggle}
     />
   );
 }
